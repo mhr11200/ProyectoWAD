@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel='stylesheet' /> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <h:form id="frmNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link fs-3" aria-current="page" href="../index.xhtml">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3 active" value="Usuarios" action="#{usuarioMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Alumnos" action="#{alumnoMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Profesores" action="#{profesorMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Grupos" action="#{grupoMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Materias" action="#{materiaMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Calificaciones" action="#{calificacionMB.prepareIndex()}"/>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">
+                        Agregar usuario
+                    </h2>
+                </div>
+                <div class="card-body table-responsive">
+                    <f:view>
+                        <h:form id="frmUsuarioForm">
+                            <h:inputHidden id="accion" value="#{usuarioMB.accion}"/>
+                            <h:panelGrid columns="3">
+                                <h:outputText value="Nombre: "/>
+                                <h:inputText id="txtNombre" value="#{usuarioMB.dto.nombre}" class="form-control"/>
+                                <h:message for="txtNombre"/>
+
+                                <h:outputText value="Apellido: "/>
+                                <h:inputText id="txtApPat" value="#{usuarioMB.dto.apellidoPaterno}" class="form-control"/>
+                                <h:message for="txtApPat"/>
+
+                                <h:outputText value="Nombre usuario: "/>
+                                <h:inputText id="txtUserName" value="#{usuarioMB.dto.nombreUsuario}" class="form-control"/>
+                                <h:message for="txtUserName"/>
+
+                                <h:outputText value="Contraseña "/>
+                                <h:inputText id="txtPassword" value="#{usuarioMB.dto.contrasena}" class="form-control"/>
+                                <h:message for="txtPassword"/>
+
+                                <h:commandButton 
+                                    action="#{usuarioMB.add()}" 
+                                    value="Crear usuario" 
+                                    class="btn btn-success" 
+                                    rendered="#{usuarioMB.modoCrear}"
+                                    />
+
+                                <h:commandButton 
+                                    action="#{usuarioMB.update()}" 
+                                    value="Actualizar usuario" 
+                                    class="btn btn-success" 
+                                    rendered="#{usuarioMB.modoActualizar}"
+                                    />
+                            </h:panelGrid>
+                        </h:form>
+                    </f:view>                    
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

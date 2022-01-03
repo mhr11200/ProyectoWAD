@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC 
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://ec2-52-70-205-234.compute-1.amazonaws.com:5432/d538ff0nkmb8dh</property>
+        <property name="connection.username">kdadwslapgtibo</property>
+        <property name="connection.password">7b1586622357fc224313ebe46467db90cfa1de509042d312776844edace9fc20</property>
+        <property name="connection.pool_size">1</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="show_sql">true</property>
+        
+        <!--definir posibles valores de estos dos-->
+        <property name="current_session_context_class">thread</property>
+        <property name="hbm2ddl.auto">update</property>
+        
+        
+        <property name="hibernate.dbcp.initialSize">5</property>
+        <property name="hibernate.dbcp.maxTotal">20</property>
+        <property name="hibernate.dbcp.maxIdle">10</property>
+        <property name="hibernate.dbcp.minIdle">5</property>
+        <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+        
+        <!-- a partir de aqui siguen las definiciones de las entidades -->
+        
+        <mapping class="com.ipn.mx.modelo.entidades.Alumno"/>
+        <mapping class="com.ipn.mx.modelo.entidades.Calificaciones"/>
+        <mapping class="com.ipn.mx.modelo.entidades.Grupo"/>
+        <mapping class="com.ipn.mx.modelo.entidades.Materia"/>
+        <mapping class="com.ipn.mx.modelo.entidades.Profesor"/>
+        <mapping class="com.ipn.mx.modelo.entidades.Usuario"/>
+    </session-factory>
+</hibernate-configuration>

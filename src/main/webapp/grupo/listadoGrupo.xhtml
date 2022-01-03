@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel='stylesheet' /> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" ></script>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <h:form id="frmNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link fs-3" aria-current="page" href="../index.xhtml">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Usuarios" action="#{usuarioMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Alumnos" action="#{alumnoMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Profesores" action="#{profesorMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3 active" value="Grupos" action="#{grupoMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Materias" action="#{materiaMB.prepareIndex()}"/>
+                            </li>
+                            <li class="nav-item">
+                                <h:commandLink class="nav-link fs-3" value="Calificaciones" action="#{calificacionMB.prepareIndex()}"/>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="card mt-5">
+            <div class="card-header">
+                <h2 class="text-center text-primary">
+                    Listado de grupo
+                </h2>
+            </div>
+            <div class="card-body text-primary">
+                <div class="table-responsive">
+                    <f:view>
+                        <h:form id="frmGrupo">
+                            <h:commandButton 
+                                action="#{grupoMB.prepareAdd()}" 
+                                value="Crear Grupo" 
+                                class="btn btn-success"
+                                immediate="true"
+                                />
+                            <h:dataTable var="dto" value="#{grupoMB.listaGrupos}" class="table table-striped">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblIdGrupo" value="No. Grupo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.idGrupo}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblNombreProf" value="Nomb Prof"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.idProfesor.getNombre()} #{dto.idProfesor.getApellidoPaterno()}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblMateria1" value="Nom. Materia 1"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.idMateriaUno.getNombre()}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblMateria2" value="Nom. Materia 2"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.idMateriaDos.getNombre()}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblMateria3" value="Nom. Materia 3"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.idMateriaTres.getNombre()}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputLabel id="lblNivel" value="Nivel"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.nivel}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Actualizar"/>
+                                    </f:facet>
+                                    <h:commandLink 
+                                        action="#{grupoMB.prepareUpdate()}" 
+                                        actionListener="#{grupoMB.seleccionarGrupo}" 
+                                        immediate="true" 
+                                        class="btn btn-warning"
+                                        >
+                                        <f:param name="claveUsuario" value="#{dto.idGrupo}"/>
+                                        Actualizar
+                                    </h:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Eliminar"/>
+                                    </f:facet>
+                                    <h:commandLink 
+                                        action="#{grupoMB.delete()}" 
+                                        actionListener="#{grupoMB.seleccionarGrupo}" 
+                                        immediate="true" 
+                                        class="btn btn-danger"
+                                        >
+                                        <f:param name="claveUsuario" value="#{dto.idGrupo}"/>
+                                        Eliminar
+                                    </h:commandLink>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ver calificaciones"/>
+                                    </f:facet>
+                                    <h:commandLink 
+                                        action="#{grupoMB.graficarCalificacion()}" 
+                                        immediate="true" 
+                                        class="btn btn-info"
+                                        >
+                                        <f:param name="claeGrupo" value="#{dto.idGrupo}"/>
+                                        Ver calificaciones
+                                    </h:commandLink>
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </f:view>
+                    <div class="container text-center">
+                        <p:graphicImage value="#{grupoMB.chartImage}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

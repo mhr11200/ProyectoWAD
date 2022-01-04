@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class BaseBean implements Serializable {
     protected static final String ACC_CREAR = "CREAR";
     protected static final String ACC_ACTUALIZAR = "ACTUALIZAR";
-    protected static final String ACC_LOGIN = "LOGIN";
     
     protected String accion;
     
@@ -29,14 +28,6 @@ public class BaseBean implements Serializable {
     public boolean isModoActualizar(){
         if (accion != null){
             return accion.equals(ACC_ACTUALIZAR);
-        }
-        
-        return false;
-    }
-    
-    public boolean isModoLogIn(){
-        if (accion != null){
-            return accion.equals(ACC_LOGIN);
         }
         
         return false;

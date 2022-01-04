@@ -12,9 +12,7 @@ import com.ipn.mx.modelo.dao.CalificacionesDAO;
 import com.ipn.mx.modelo.dao.MateriaDAO;
 import com.ipn.mx.modelo.entidades.Alumno;
 import com.ipn.mx.modelo.entidades.Calificaciones;
-import com.ipn.mx.modelo.entidades.Grupo;
 import com.ipn.mx.modelo.entidades.Materia;
-import com.ipn.mx.modelo.entidades.Profesor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +37,30 @@ public class CalificacionMB extends BaseBean implements Serializable {
     private List<Calificaciones> listaCalificaciones;
     private List<Materia> listaMaterias;
     private List<Alumno> listaAlumnos;
+    
+    private String errorPeriodo;
+    private String errorCalificacion;
 
     public CalificacionMB() {
     }
+
+    public String getErrorPeriodo() {
+        return errorPeriodo;
+    }
+
+    public void setErrorPeriodo(String errorPeriodo) {
+        this.errorPeriodo = errorPeriodo;
+    }
+
+    public String getErrorCalificacion() {
+        return errorCalificacion;
+    }
+
+    public void setErrorCalificacion(String errorCalificacion) {
+        this.errorCalificacion = errorCalificacion;
+    }
+    
+    
 
     public CalificacionesDAO getDao() {
         return dao;
@@ -127,11 +146,18 @@ public class CalificacionMB extends BaseBean implements Serializable {
     }
 
     public Boolean validate() {
-        boolean valido = true;
-        //if(dto.getNombreUsuario() == null){
-        //    valido = false;
-        //}
-        return valido;
+        if(dto.getPeriodo() < 0 || dto.getPeriodo() > 3){
+            setErrorPeriodo("El periodo debe estar dentro de 1 y 3");
+            return false;
+        }
+        if(dto.getCalificacion()< 0 || dto.getCalificacion()> 10){
+            setErrorCalificacion("La calificación va de 0 a 10");
+            return false;
+        }
+        
+        setErrorCalificacion(null);
+        setErrorPeriodo(null);
+        return true;
     }
 
     public String add() {

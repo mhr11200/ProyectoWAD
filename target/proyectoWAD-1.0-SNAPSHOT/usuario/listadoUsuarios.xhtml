@@ -89,6 +89,12 @@
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
+                                        <h:outputLabel id="lblCorreo" value="Correo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{dto.correo}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
                                         <h:outputText value="Actualizar"/>
                                     </f:facet>
                                     <h:commandLink 

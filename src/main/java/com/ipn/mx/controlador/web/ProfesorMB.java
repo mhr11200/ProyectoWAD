@@ -29,10 +29,20 @@ public class ProfesorMB extends BaseBean implements Serializable{
     private Profesor dto;
 
     private List<Profesor> listaProfesor;
+    
+    private String errorSueldo;
 
     public ProfesorMB(){
     }
 
+    public String getErrorSueldo() {
+        return errorSueldo;
+    }
+
+    public void setErrorSueldo(String errorSueldo) {
+        this.errorSueldo = errorSueldo;
+    }
+    
     public Profesor getDto() {
         return dto;
     }
@@ -73,12 +83,13 @@ public class ProfesorMB extends BaseBean implements Serializable{
     }
     
     public Boolean validate() {
-        boolean valido = true;
-        //if(dto.getNombreUsuario() == null){
-        //    valido = false;
-        //}
-        //aqui van validaciones
-        return valido;
+        if (dto.getSueldo() <= 0){
+            setErrorSueldo("Sueldo invalido");
+            return false;
+        }
+        
+        setErrorSueldo(null);
+        return true;
     }
     
     public String add() {

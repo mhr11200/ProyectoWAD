@@ -53,9 +53,22 @@ public class GrupoMB extends BaseBean implements Serializable {
     private List<Profesor> listaProf;
     private List<Materia> listaMat;
     
+    private String errorNivel;
+    private String errorMateria1;
+    private String errorMateria2;
+    private String errorMateria3;
+    
     private StreamedContent chartImage;
 
     public GrupoMB() {
+    }
+
+    public String getErrorNivel() {
+        return errorNivel;
+    }
+
+    public void setErrorNivel(String errorNivel) {
+        this.errorNivel = errorNivel;
     }
     
     public StreamedContent getChartImage() {
@@ -98,6 +111,30 @@ public class GrupoMB extends BaseBean implements Serializable {
         this.listaMat = listaMat;
     }
 
+    public String getErrorMateria1() {
+        return errorMateria1;
+    }
+
+    public void setErrorMateria1(String errorMateria1) {
+        this.errorMateria1 = errorMateria1;
+    }
+
+    public String getErrorMateria2() {
+        return errorMateria2;
+    }
+
+    public void setErrorMateria2(String errorMateria2) {
+        this.errorMateria2 = errorMateria2;
+    }
+
+    public String getErrorMateria3() {
+        return errorMateria3;
+    }
+
+    public void setErrorMateria3(String errorMateria3) {
+        this.errorMateria3 = errorMateria3;
+    }
+    
     @PostConstruct
     public void init() {
         listaGrupos = new ArrayList<>();
@@ -125,11 +162,33 @@ public class GrupoMB extends BaseBean implements Serializable {
     }
 
     public Boolean validate() {
-        boolean valido = true;
-        //if(dto.getNombreUsuario() == null){
-        //    valido = false;
-        //}
-        return valido;
+        if(dto.getNivel() < 1 || dto.getNivel() > 3){
+            setErrorNivel("El nivel debe estar dentro de 1 y 3");
+            return false;
+        }
+        if(dto.getIdMateriaUnoaux() == dto.getIdMateriaDosaux()) {
+            setErrorMateria1("No se puede repetir");
+            setErrorMateria2("No se puede repetir");
+            if (dto.getIdMateriaUnoaux() == dto.getIdMateriaTresaux()){
+                setErrorMateria3("No se puede repetir");
+            }
+            return false;
+        }
+        if (dto.getIdMateriaUnoaux() == dto.getIdMateriaTresaux()){
+            setErrorMateria1("No se puede repetir");
+            setErrorMateria3("No se puede repetir");
+            return false;
+        }
+        if (dto.getIdMateriaDosaux() == dto.getIdMateriaTresaux()){
+            setErrorMateria2("No se puede repetir");
+            setErrorMateria3("No se puede repetir");
+            return false;
+        }
+        setErrorMateria1(null);
+        setErrorMateria2(null);
+        setErrorMateria3(null);
+        setErrorNivel(null);
+        return true;
     }
 
     public String add() {

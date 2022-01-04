@@ -65,31 +65,31 @@
                             <h:dataTable var="dto" value="#{calificacionMB.listaCalificaciones}" class="table table-striped">
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblIdCal" value="No. Calificación"/>
+                                        <h:outputLabel id="lblIdCal" value="Clave calificación"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idCalificacion}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblNombreMat" value="Nomb materia"/>
+                                        <h:outputLabel id="lblNombreMat" value="Materia"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idMateria.nombre} "/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblNomAl" value="Nom. Alumno"/>
+                                        <h:outputLabel id="lblNomAl" value="Alumno"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idAlumno.nombre} #{dto.idAlumno.apellidoPaterno}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblPeriodo" value="Num. Periodo"/>
+                                        <h:outputLabel id="lblPeriodo" value="Periodo"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.periodo}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblCal" value="Cal."/>
+                                        <h:outputLabel id="lblCal" value="Calificación"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.calificacion}"/>
                                 </h:column>

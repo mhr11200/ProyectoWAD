@@ -26,7 +26,7 @@
                                 <h:commandLink class="nav-link fs-3" value="Usuarios" action="#{usuarioMB.prepareIndex()}"/>
                             </li>
                             <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3 alumno" value="Alumnos" action="#{alumnoMB.prepareIndex()}"/>
+                                <h:commandLink class="nav-link fs-3 active" value="Alumnos" action="#{alumnoMB.prepareIndex()}"/>
                             </li>
                             <li class="nav-item">
                                 <h:commandLink class="nav-link fs-3" value="Profesores" action="#{profesorMB.prepareIndex()}"/>
@@ -50,7 +50,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-center">
-                        Agregar usuario
+                        Agregar alumno
                     </h2>
                 </div>
                 <div class="card-body table-responsive">
@@ -59,15 +59,15 @@
                             <h:inputHidden id="accion" value="#{alumnoMB.accion}"/>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Nombre: "/>
-                                <h:inputText id="txtNombre" value="#{alumnoMB.dto.nombre}" class="form-control"/>
-                                <h:message for="txtNombre"/>
+                                <h:inputText id="txtNombre" value="#{alumnoMB.dto.nombre}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtNombre" class="text-danger fs-6"/>
                                 
                                 <h:outputText value="Apellido: "/>
-                                <h:inputText id="txtApPat" value="#{alumnoMB.dto.apellidoPaterno}" class="form-control"/>
-                                <h:message for="txtApPat"/>
+                                <h:inputText id="txtApPat" value="#{alumnoMB.dto.apellidoPaterno}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtApPat" class="text-danger fs-6"/>
                                 
                                 <h:outputText value="Grupo: "/>
-                                <h:selectOneMenu id="cboGrupo" value="#{alumnoMB.dto.idGrupoAux}" class="form-control">
+                                <h:selectOneMenu id="cboGrupo" value="#{alumnoMB.dto.idGrupoAux}" class="form-control" required="true" requiredMessage="Se necesita un valor">
                                     <f:selectItems 
                                         value="#{alumnoMB.listaGrupo}" 
                                         var="grupo" 
@@ -75,18 +75,18 @@
                                         itemValue="#{grupo.idGrupo}"
                                     />
                                 </h:selectOneMenu>
-                                <h:message for="cboGrupo"/>
+                                <h:message for="cboGrupo" class="text-danger fs-6"/>
                                 
                                 <h:commandButton 
                                     action="#{alumnoMB.add()}" 
-                                    value="Crear usuario" 
+                                    value="Crear alumno" 
                                     class="btn btn-success" 
                                     rendered="#{alumnoMB.modoCrear}"
                                 />
                                 
                                 <h:commandButton 
                                     action="#{alumnoMB.update()}" 
-                                    value="Actualizar usuario" 
+                                    value="Actualizar alumno" 
                                     class="btn btn-success" 
                                     rendered="#{alumnoMB.modoActualizar}"
                                 />

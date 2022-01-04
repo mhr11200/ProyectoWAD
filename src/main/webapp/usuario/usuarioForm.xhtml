@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel='stylesheet' /> 
@@ -59,21 +60,32 @@
                             <h:inputHidden id="accion" value="#{usuarioMB.accion}"/>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Nombre: "/>
-                                <h:inputText id="txtNombre" value="#{usuarioMB.dto.nombre}" class="form-control"/>
-                                <h:message for="txtNombre"/>
+                                <h:inputText id="txtNombre" value="#{usuarioMB.dto.nombre}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtNombre" class="text-danger fs-6"/>
 
                                 <h:outputText value="Apellido: "/>
-                                <h:inputText id="txtApPat" value="#{usuarioMB.dto.apellidoPaterno}" class="form-control"/>
-                                <h:message for="txtApPat"/>
+                                <h:inputText id="txtApPat" value="#{usuarioMB.dto.apellidoPaterno}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtApPat" class="text-danger fs-6"/>
 
                                 <h:outputText value="Nombre usuario: "/>
-                                <h:inputText id="txtUserName" value="#{usuarioMB.dto.nombreUsuario}" class="form-control"/>
-                                <h:message for="txtUserName"/>
-
-                                <h:outputText value="Contraseña "/>
-                                <h:inputText id="txtPassword" value="#{usuarioMB.dto.contrasena}" class="form-control"/>
-                                <h:message for="txtPassword"/>
-
+                                <h:inputText id="txtUserName" value="#{usuarioMB.dto.nombreUsuario}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <c:if test="#{usuarioMB.errorUsuario != null}">
+                                    <h:outputText value="#{usuarioMB.errorUsuario}" class="text-danger fs-6"/>
+                                </c:if>
+                                <c:if test="#{usuarioMB.errorUsuario == null}">
+                                    <h:message for="txtUserName" class="text-danger fs-6"/>
+                                </c:if>
+                                <h:outputText value="Contraseña: "/>
+                                <h:inputText id="txtPassword" value="#{usuarioMB.dto.contrasena}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtPassword" class="text-danger fs-6"/>
+                                <h:outputText value="Correo: "/>
+                                <h:inputText id="txtCorreo" value="#{usuarioMB.dto.correo}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <c:if test="#{usuarioMB.errorCorreo != null}">
+                                    <h:outputText value="#{usuarioMB.errorCorreo}" class="text-danger fs-6"/>
+                                </c:if>
+                                <c:if test="#{usuarioMB.errorCorreo == null}">
+                                    <h:message for="txtCorreo" class="text-danger fs-6"/>
+                                </c:if>
                                 <h:commandButton 
                                     action="#{usuarioMB.add()}" 
                                     value="Crear usuario" 

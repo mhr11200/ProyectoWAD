@@ -66,31 +66,31 @@
                             <h:dataTable var="dto" value="#{grupoMB.listaGrupos}" class="table table-striped">
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblIdGrupo" value="No. Grupo"/>
+                                        <h:outputLabel id="lblIdGrupo" value="Clave grupo"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idGrupo}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblNombreProf" value="Nomb Prof"/>
+                                        <h:outputLabel id="lblNombreProf" value="Profesor"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idProfesor.getNombre()} #{dto.idProfesor.getApellidoPaterno()}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblMateria1" value="Nom. Materia 1"/>
+                                        <h:outputLabel id="lblMateria1" value="Materia 1"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idMateriaUno.getNombre()}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblMateria2" value="Nom. Materia 2"/>
+                                        <h:outputLabel id="lblMateria2" value="Materia 2"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idMateriaDos.getNombre()}"/>
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputLabel id="lblMateria3" value="Nom. Materia 3"/>
+                                        <h:outputLabel id="lblMateria3" value="Materia 3"/>
                                     </f:facet>
                                     <h:outputText value="#{dto.idMateriaTres.getNombre()}"/>
                                 </h:column>

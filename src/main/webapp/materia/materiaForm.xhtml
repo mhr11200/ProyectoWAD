@@ -59,8 +59,8 @@
                             <h:inputHidden id="accion" value="#{materiaMB.accion}"/>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Nombre: "/>
-                                <h:inputText id="txtNombre" value="#{materiaMB.dto.nombre}" class="form-control"/>
-                                <h:message for="txtNombre"/>
+                                <h:inputText id="txtNombre" value="#{materiaMB.dto.nombre}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtNombre" class="text-danger fs-6"/>
                                 <h:commandButton 
                                     action="#{materiaMB.add()}" 
                                     value="Crear materia" 

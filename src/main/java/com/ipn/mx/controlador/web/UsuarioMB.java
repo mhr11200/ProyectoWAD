@@ -7,6 +7,7 @@ package com.ipn.mx.controlador.web;
 
 import com.ipn.mx.modelo.dao.UsuarioDAO;
 import com.ipn.mx.modelo.entidades.Usuario;
+import com.ipn.mx.utilerias.EnviarMail;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,34 @@ public class UsuarioMB extends BaseBean implements Serializable {
     private final UsuarioDAO dao = new UsuarioDAO();
     private Usuario dto;
     private List<Usuario> listaUsuario;
+    
+    private String errorUsuario;
+    private String errorCorreo;
 
     /**
      * Creates a new instance of UsuarioMB
      */
     public UsuarioMB() {
     }
+
+    public String getErrorCorreo() {
+        return errorCorreo;
+    }
+
+    public void setErrorCorreo(String errorCorreo) {
+        this.errorCorreo = errorCorreo;
+    }
+
+    
+    public String getErrorUsuario() {
+        return errorUsuario;
+    }
+
+    public void setErrorUsuario(String errorUsuario) {
+        this.errorUsuario = errorUsuario;
+    }
+    
+    
 
     public Usuario getDto() {
         return dto;
@@ -55,8 +78,6 @@ public class UsuarioMB extends BaseBean implements Serializable {
         listaUsuario = new ArrayList<>();
 
         listaUsuario = dao.readAll();
-        System.out.println("LISTA\n\n");
-        System.out.println(listaUsuario);
     }
 
     public String prepareAdd() {
@@ -71,9 +92,9 @@ public class UsuarioMB extends BaseBean implements Serializable {
     }
 
     public String prepareLogIn() {
+        init();
         dto = new Usuario();
-        setAccion(ACC_LOGIN);
-        return "/usuario/LogIn?faces-redirect=true";
+        return "/usuario/logIn?faces-redirect=true";
     }
 
     public String prepareIndex() {
@@ -82,21 +103,21 @@ public class UsuarioMB extends BaseBean implements Serializable {
     }
 
     public Boolean validate() {
-        boolean valido = true;
-        //if(dto.getNombreUsuario() == null){
-        //    valido = false;
-        //}
-        //aqui van validaciones
-        return valido;
+        if (!dto.getCorreo().contains("gmail")){
+            setErrorCorreo("Correo invalido, solo acepta gmail");
+            return false;
+        }
+        setErrorCorreo(null);
+        return true;
     }
 
     public String add() {
         Boolean valido = validate();
         if (valido) {
-            System.out.println("\n\nACAAAAAAA\n\n");
-            System.out.println("VALORES");
-            System.out.println(dto);
-            dao.create(dto);
+            if(!dao.create(dto)){
+                setErrorUsuario("El usuario ya existe");
+                return prepareAdd();
+            }
             return prepareIndex();
         }
 
@@ -130,17 +151,17 @@ public class UsuarioMB extends BaseBean implements Serializable {
         }
     }
 
-    public String LogInMB() {
-        System.out.println("\n\nACAAAAAAA\n\n");
-        System.out.println("VALORES");
-        System.out.println(dto);
+    public String logInMB() {
         try {
-            if (dao.LogIn(dto)) {
-                return prepareIndex();
+            dto = dao.LogIn(dto);
+            if (dto != null) {
+                EnviarMail email = new EnviarMail();
+                email.enviarCorreo(dto.getCorreo(),"Inicio de sesión","Se ha registrado un inicio de sesión");
+                return "/usuario/listadoUsuarios?faces-redirect=true";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/index.xhtml";
+        return prepareLogIn();
     }
 }

@@ -38,6 +38,8 @@ public class Usuario implements Serializable{
     private String apellidoPaterno;
     @Column(name = "nombreUsuario",length = 50, nullable = false)
     private String nombreUsuario;
-    @Column(name = "contrasena",length = 50, nullable = false)
+    @Column(name = "contrasena",length = 100, nullable = false)
     private String contrasena;
+    @Column(name = "correo",length = 100, nullable = false)
+    private String correo;
 }

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel='stylesheet' /> 
@@ -59,27 +60,33 @@
                             <h:inputHidden id="accion" value="#{profesorMB.accion}"/>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Nombre: "/>
-                                <h:inputText id="txtNombre" value="#{profesorMB.dto.nombre}" class="form-control"/>
-                                <h:message for="txtNombre"/>
+                                <h:inputText id="txtNombre" value="#{profesorMB.dto.nombre}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtNombre" class="text-danger fs-6"/>
                                 
                                 <h:outputText value="Apellido: "/>
-                                <h:inputText id="txtApPat" value="#{profesorMB.dto.apellidoPaterno}" class="form-control"/>
-                                <h:message for="txtApPat"/>
+                                <h:inputText id="txtApPat" value="#{profesorMB.dto.apellidoPaterno}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtApPat" class="text-danger fs-6"/>
                                 
                                 <h:outputText value="Sueldo: "/>
-                                <h:inputText id="txtSueldo" value="#{profesorMB.dto.sueldo}" class="form-control"/>
-                                <h:message for="txtUserName"/>
+                                <h:inputText id="txtSueldo" value="#{profesorMB.dto.sueldo}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <h:message for="txtUserName" class="text-danger fs-6"/>
+                                <c:if test="#{profesorMB.errorSueldo != null}">
+                                    <h:outputText value="#{profesorMB.errorSueldo}" class="text-danger fs-6"/>
+                                </c:if>
+                                <c:if test="#{profesorMB.errorSueldo == null}">
+                                    <h:message for="txtSueldo" class="text-danger fs-6"/>
+                                </c:if>
                                 
                                 <h:commandButton 
                                     action="#{profesorMB.add()}" 
-                                    value="Crear usuario" 
+                                    value="Crear profesor" 
                                     class="btn btn-success" 
                                     rendered="#{profesorMB.modoCrear}"
                                 />
                                 
                                 <h:commandButton 
                                     action="#{profesorMB.update()}" 
-                                    value="Actualizar usuario" 
+                                    value="Actualizar profesor" 
                                     class="btn btn-success" 
                                     rendered="#{profesorMB.modoActualizar}"
                                 />

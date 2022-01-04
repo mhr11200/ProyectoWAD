@@ -7,8 +7,14 @@ package com.ipn.mx.modelo.dao;
 
 import com.ipn.mx.modelo.entidades.Usuario;
 import com.ipn.mx.utilerias.HibernateUtil;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,20 +25,23 @@ import org.hibernate.query.Query;
  * @author alexi
  */
 public class UsuarioDAO {
-public void create(Usuario dto){
+
+    public Boolean create(Usuario dto) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = s.getTransaction();
         try {
             tx.begin();
             s.save(dto);
             tx.commit();
+            return true;
         } catch (HibernateException e) {
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            System.out.println("Error: " + e.getMessage());
+            return false;
         }
     }
+
     public void update(Usuario dto) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = s.getTransaction();
@@ -47,6 +56,7 @@ public void create(Usuario dto){
             System.out.println("Error: " + e.getMessage());
         }
     }
+
     public void delete(Usuario dto) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = s.getTransaction();
@@ -67,7 +77,7 @@ public void create(Usuario dto){
         Transaction tx = s.getTransaction();
         try {
             tx.begin();
-            dto=s.get(dto.getClass(), dto.getIdUsuario());
+            dto = s.get(dto.getClass(), dto.getIdUsuario());
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null && tx.isActive()) {
@@ -85,7 +95,7 @@ public void create(Usuario dto){
         try {
             tx.begin();
             Query q = s.createQuery("from Usuario p order by p.idUsuario");
-            lista= q.list();
+            lista = q.list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null && tx.isActive()) {
@@ -95,35 +105,50 @@ public void create(Usuario dto){
         }
         return lista;
     }
-    
-    public Boolean LogIn(Usuario dto){
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tx = s.getTransaction();
-        List<Usuario> lista = new ArrayList<>();
+
+    public Usuario LogIn(Usuario dto) {
+        GraficaDAO conectar = new GraficaDAO();
+
+        Connection conexion = conectar.conectar();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         try {
-            tx.begin();
-            Query q = s.createQuery("Select idUsuario from Usuario where nombreUsuario=:"+dto.getNombre()+" and contrasena=:"+dto.getContrasena());
-            lista = q.list();
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
+            ps = conexion.prepareStatement("Select * from usuario where nombreusuario = ? and contrasena = ?;");
+            ps.setString(1, dto.getNombreUsuario());
+            ps.setString(2, dto.getContrasena());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                dto.setNombre(rs.getString("nombre"));
+                dto.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                dto.setIdUsuario(rs.getInt("idUsuario"));
+                dto.setCorreo(rs.getString("correo"));
+                dto.setNombreUsuario(rs.getString("nombreUsuario"));
+                dto.setContrasena("");
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conexion != null) {
+                    conexion.close();
+                }
+                return dto;
             }
-            System.out.println("Error: " + e.getMessage());
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if (!lista.isEmpty() && lista.size() == 1){
-            return true;
-        }
-        return false;
+
+        return null;
     }
 
     public static void main(String[] args) {
         UsuarioDAO dao = new UsuarioDAO();
         List<Usuario> lista = dao.readAll();
         for (Usuario categoriaDTO : lista) {
-            System.out.println("Elemento: "+categoriaDTO);
+            System.out.println("Elemento: " + categoriaDTO);
         }
     }
 }
-

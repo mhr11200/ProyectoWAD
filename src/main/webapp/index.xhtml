@@ -21,29 +21,25 @@
                             <li class="nav-item">
                                 <a class="nav-link fs-3 active" aria-current="page" href="./index.xhtml">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Usuarios" action="#{usuarioMB.prepareIndex()}"/>
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Alumnos" action="#{alumnoMB.prepareIndex()}"/>
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Profesores" action="#{profesorMB.prepareIndex()}"/>
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Grupos" action="#{grupoMB.prepareIndex()}"/>
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Materias" action="#{materiaMB.prepareIndex()}"/>
-                            </li>
-                            <li class="nav-item">
-                                <h:commandLink class="nav-link fs-3" value="Calificaciones" action="#{calificacionMB.prepareIndex()}"/>
+                            <li class="nav-item btn btn-success">
+                                <h:commandLink class="nav-link fs-4" style="color: white" value="Iniciar sesión" action="#{usuarioMB.prepareLogIn()}"/>
                             </li>
                         </ul>
                     </h:form>
                 </div>
             </div>
         </nav>
+        <div class="container mt-5 text-center">
+            <p>Para pruebas usar esto</p>
+            <p>Usuario: Admin1</p>
+            <p>Contraseña: Admin1</p>
+            <p>Correo: mauriciohdz.ipn.wad@gmail.com</p>
+            <p>Contraseña: MauricioWAD</p>
+            <br/>
+            <p>Elaborado por</p>
+            <p>Hernandez Rojas Mauricio - 2019630235</p>
+            <p>Villegas Sánchez Alexis - 2019630247</p>
+        </div>
     </h:body>
 </html>
 

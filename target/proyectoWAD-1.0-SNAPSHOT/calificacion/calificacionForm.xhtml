@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel='stylesheet' /> 
@@ -59,7 +60,7 @@
                             <h:inputHidden id="accion" value="#{calificacionMB.accion}"/>
                             <h:panelGrid columns="3">
                                 <h:outputText value="Nom. Materia: "/>
-                                <h:selectOneMenu id="cboMateria" value="#{calificacionMB.dto.idMateriaAux}" class="form-control">
+                                <h:selectOneMenu id="cboMateria" value="#{calificacionMB.dto.idMateriaAux}" class="form-control" required="true" requiredMessage="Se necesita un valor">
                                     <f:selectItems 
                                         value="#{calificacionMB.listaMaterias}" 
                                         var="mat" 
@@ -70,7 +71,7 @@
                                 <h:message for="cboMateria"/>
                                 
                                 <h:outputText value="Nom. Alumno: "/>
-                                <h:selectOneMenu id="cboAl" value="#{calificacionMB.dto.idAlumnoAux}" class="form-control">
+                                <h:selectOneMenu id="cboAl" value="#{calificacionMB.dto.idAlumnoAux}" class="form-control" required="true" requiredMessage="Se necesita un valor">
                                     <f:selectItems 
                                         value="#{calificacionMB.listaAlumnos}" 
                                         var="al" 
@@ -80,12 +81,21 @@
                                 </h:selectOneMenu>
                                 <h:message for="cboAl"/>
                                 <h:outputText value="Periodo: "/>
-                                <h:inputText id="txtPeriodo" value="#{calificacionMB.dto.periodo}" class="form-control"/>
-                                <h:message for="txtPeriodo"/>
-                                
+                                <h:inputText id="txtPeriodo" value="#{calificacionMB.dto.periodo}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <c:if test="#{calificacionMB.errorPeriodo != null}">
+                                    <h:outputText value="#{calificacionMB.errorPeriodo}" class="text-danger fs-6"/>
+                                </c:if>
+                                <c:if test="#{calificacionMB.errorPeriodo == null}">
+                                    <h:message for="txtPeriodo" class="text-danger fs-6"/>
+                                </c:if>
                                 <h:outputText value="Calificacion: "/>
-                                <h:inputText id="txtCal" value="#{calificacionMB.dto.calificacion}" class="form-control"/>
-                                <h:message for="txtCal"/>
+                                <h:inputText id="txtCal" value="#{calificacionMB.dto.calificacion}" class="form-control" required="true" requiredMessage="Se necesita un valor"/>
+                                <c:if test="#{calificacionMB.errorCalificacion != null}">
+                                    <h:outputText value="#{calificacionMB.errorCalificacion}" class="text-danger fs-6"/>
+                                </c:if>
+                                <c:if test="#{calificacionMB.errorCalificacion == null}">
+                                    <h:message for="txtCal" class="text-danger fs-6"/>
+                                </c:if>
                                 
                                 <h:commandButton 
                                     action="#{calificacionMB.add()}" 

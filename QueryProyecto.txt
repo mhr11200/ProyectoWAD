@@ -1,0 +1,76 @@
+create table Profesor(
+	idProfesor serial primary key,
+	nombre varchar(50) not null,
+	apellidoPaterno varchar(100) not null,
+	sueldo int not null
+);
+
+create table Materia(
+	idMateria serial primary key,
+	nombre varchar(50) not null
+);
+
+create table Grupo(
+	idGrupo serial primary key,
+	idProfesor int not null,
+	idMateriaUno int not null,
+	idMateriaDos int not null,
+	idMateriaTres int not null,
+	nivel int not null,
+	foreign key(idProfesor) references Profesor(idProfesor) on update cascade on delete cascade,
+	foreign key(idMateriaUno) references Materia(idMateria) on update cascade on delete cascade,
+	foreign key(idMateriaDos) references Materia(idMateria) on update cascade on delete cascade,
+	foreign key(idMateriaTres) references Materia(idMateria) on update cascade on delete cascade
+);
+
+create table Alumno(
+	idAlumno serial primary key,
+	nombre varchar(50) not null,
+	apellidoPaterno varchar(100) not null,
+	idGrupo int not null,
+	foreign key(idGrupo) references Grupo(idGrupo) on update cascade on delete cascade
+);
+
+create table Calificaciones(
+	idCalificacion serial primary key,
+	idMateria int not null,
+	idAlumno int not null,
+	preriodo int not null,
+	calificacion int not null,
+	foreign key(idMateria) references Materia(idMateria) on update cascade on delete cascade,
+	foreign key(idAlumno) references Alumno(idAlumno) on update cascade on delete cascade
+);
+
+create table Usuario(
+	idUsuario serial primary key,
+	nombre varchar(50) not null,
+	apellidoPaterno varchar(100) not null,
+	nombreUsuario varchar(50) not null unique,
+	contrasena varchar(100) not null,
+	correo varchar(100) not null
+);
+
+insert into usuario (nombre,apellidoPaterno,nombreUsuario,contrasena,correo) values ('Mauricio','Hernandez','Admin1','Admin1','mauriciohdz.ipn.wad@gmail.com');
+insert into usuario (nombre,apellidoPaterno,nombreUsuario,contrasena,correo) values ('Alexis','Villegas','Admin2','Admin2','alexisvisa17@gmail.com');
+
+insert into profesor (nombre,apellidoPaterno,sueldo) values ('Jose','Chavez',1000);
+insert into profesor (nombre,apellidoPaterno,sueldo) values ('Maria','Rojas',3000);
+
+insert into materia (nombre) values ('Matematicas');
+insert into materia (nombre) values ('Fisica');
+insert into materia (nombre) values ('Programacion');
+
+insert into Grupo (idProfesor,idMateriaUno,idMateriaDos,idMateriaTres,nivel) values (1,1,2,3,1);
+insert into Grupo (idProfesor,idMateriaUno,idMateriaDos,idMateriaTres,nivel) values (2,1,2,3,1);
+
+insert into Alumno (nombre,apellidoPaterno,idGrupo) values ('Pepe', 'Madero', 1);
+insert into Alumno (nombre,apellidoPaterno,idGrupo) values ('Maria', 'Perez', 1);
+
+
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (1,2,10,3);
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (2,2,3,5);
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (3,2,9,3);
+
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (1,1,10,3);
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (2,1,3,5);
+insert into calificaciones (idmateria,idalumno,calificacion,periodo) values (3,1,9,3);
